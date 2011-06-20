@@ -82,10 +82,13 @@ var oauth2_client_options = {
 };
 
 var client = oauth2_client.createClient(config.oauth2_client, oauth2_client_options);
-
+var util = require('util');
 function create_server() {
   var sessions = exports.get_session_middleware();
+console.log("working dir:"+__dirname);
+console.log("client config:"+ util.inspect(config.oauth2_client,false, 1));
   return exports.server = connect.createServer(
+	 connect.logger(),
     strictTransportSecurity(365 * 24 * 3600, true)
     , connect.static(__dirname + '/static')
     , connect_form({keepExtensions: true})

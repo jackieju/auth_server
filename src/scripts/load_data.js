@@ -84,6 +84,7 @@ var load_users = function(next) {
  * Load the client applications in store.
  */
 var load_clients = function(next) {
+	console.log("load clients");
   var clients = [
     // name, redirect_uri
     [config.oauth2_client.name, config.oauth2_client.client.redirect_uri],
@@ -98,7 +99,7 @@ var load_clients = function(next) {
     var client = new model.Client({
       name: t[0],
       redirect_uri: t[1],
-      secret: 'some secret string'
+      secret: 'some_secret_string'
     });
     var future = Futures.future();
     client.save(future.deliver);
@@ -109,6 +110,7 @@ var load_clients = function(next) {
   join.add(jobs);
   join.when(function() {
     config.oauth2_client.client_id = name2client[config.oauth2_client.name].get('id');
+	console.log("client: "+config.oauth2_client.name+"("+config.oauth2_client.client_id+")");
     next()
   });
 };

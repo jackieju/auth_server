@@ -1,7 +1,7 @@
 exports.email = {
   method: "dev", // smtp in prod
   conf: {
-    host: "smtp-out.bearstech.lan"
+    host: "localhost"
   }
 };
 
@@ -25,7 +25,7 @@ var oauth2_client = exports.oauth2_client = {
   client: {
     base_url: server.base_url,
     process_login_url: '/login/process/',
-    redirect_uri: server.base_url + '/login/process/',
+	redirect_uri: server.base_url+"/test.html",
     login_url: '/login',
     logout_url: '/logout',
     default_redirection_url: '/',
@@ -38,7 +38,7 @@ var oauth2_client = exports.oauth2_client = {
       server_authorize_endpoint: server.base_url + oauth2_server.authorize_url,
       server_token_endpoint: server.base_url + oauth2_server.token_url,
       client_id: undefined, // Define the client_id depending on DB
-      client_secret: 'some secret string'
+      client_secret: 'some_secret_string'
     },
     "facebook.com": {
       server_authorize_endpoint: "https://graph.facebook.com/oauth/authorize",

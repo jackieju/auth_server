@@ -1,4 +1,4 @@
-
+var util = require('util');
 var oauth2_server = require('oauth2-server')
   , base64 = require('base64')
   , URL = require('url')
@@ -47,7 +47,7 @@ exports.init_client_id = function(callback) {
 };
 
 
-var client_data_attrs = ['client_name', 'client_id', 'redirect_uri', 'state'];
+var client_data_attrs = ['client_name', 'client_id', 'redirect_uri', 'state', 'response_type'];
 
 // -------------------------------------------------------------
 
@@ -68,6 +68,8 @@ var client_data_attrs = ['client_name', 'client_id', 'redirect_uri', 'state'];
  *
  */
 var login = exports.login = function(req, res, client_data, code_status) {
+	console.log("client_data:"+  util.inspect(client_data));
+//	console.log("===>res:"+util.inspect(res, false,1));
   var data = {}, info = {};
   client_data_attrs.forEach(function(attr) {
     // XXX: should we encode all the state in a more secure way?
@@ -79,8 +81,12 @@ var login = exports.login = function(req, res, client_data, code_status) {
   data.server_name = config.oauth2_server.name;
   user = req.session.user;
   if(user) { // The user is already logged in
+		if (client_data.response_type=='token')  // user-agent flow
+			oauth2_server.send_access_token(res, user.id, client_data.client_id, client_data);
+
+		else // authorization code flow
     // TODO: for a client first time, ask the user
-      oauth2_server.send_grant(res, model.Grant, user.id, client_data);
+      		oauth2_server.send_grant(res, model.Grant, user.id, client_data);
   }
   else { // The user is not logged in
     data.action = config.oauth2_server.process_login_url;
@@ -139,6 +145,7 @@ var fail_login = function(req, res, client_data) {
  *  - res
  */
 exports.process_login = function(req, res) {
+	console.log("===>login...");
   if (!req.form) {
     res.writeHead(400, {'Content-Type': 'text/html'});
     res.end('Invalid data.');
@@ -149,18 +156,27 @@ exports.process_login = function(req, res) {
       res.writeHead(400, {'Content-Type': 'text/plain'});
       res.end('Invalid data.');
     }
+
     if (!fields.email || !fields.password)
       return fail_login(req, res, client_data);
-    model.User.getByConfirmedEmail(fields.email, function(err, user) {
+
+//    model.User.getByConfirmedEmail(fields.email, function(err, user) {
+	 model.User.getByEmail(fields.email, function(err, user) {
       if (err) return server_error(res, err);
+	console.log("===>user="+user);
       if (!user) return fail_login(req, res, client_data);
 
       user.checkPassword(fields.password, function(err, good) {
         if (err) return server_error(res, err);
         if(!good) return fail_login(req, res, client_data);
         // The user is logged in, let's remember:
+		console.log("===>login ok");
         req.session.user = {email: user.get('email'), id: user.get('id')};
-        oauth2_server.send_grant(res, model.Grant, user.get('id'), client_data);
+		if (client_data.response_type=='token')  // user-agent flow
+			oauth2_server.send_access_token(res, user.id, client_data.client_id, client_data);
+		else
+        	oauth2_server.send_grant(res, model.Grant, user.get('id'), client_data);
+		console.log("===>send grant ok");
       });
     });
   });

@@ -143,6 +143,7 @@ var process_register = function(req, res) {
         }
         send_confirmation_email(user);
         process_register_success(res);
+console.log("==>register success");
       });
     });
   });
