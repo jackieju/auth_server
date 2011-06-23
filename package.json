@@ -15,7 +15,7 @@
 , "request": ""
 , "glob": ""
 , "oauth2-client": "https://github.com/AF83/oauth2_client_node/tarball/master"
-, "oauth2-server": "https://github.com/AF83/oauth2_server_node/tarball/master"
+, "oauth2-server": "https://github.com/jackieju/oauth2_server_node/tarball/master"
 , "mongoskin": ""
 }
 , "engines" : {"node" : "~0.4.0"}
