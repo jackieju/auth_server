@@ -121,5 +121,7 @@ var serve = exports.serve = function(port) {
 if(process.argv[1] == __filename) {
   serve(config.server.port).then(function() {
     console.log('Server listening on ' + config.server.base_url);
+//console.log("==>");	r =  connect.router;
+//	console.log("==>"+r.lookup("/clients"));
   });
 }

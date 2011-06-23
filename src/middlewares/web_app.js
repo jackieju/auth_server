@@ -117,6 +117,22 @@ function checkUserConnected(oauth2_client) {
 }
 
 /**
+ * List access tokens
+ */
+function listAccessTokens(req, res) {
+  model.AccessTokens.get(function(err, tokens) {
+    if (err) {
+      res.writeHead(500, {'Content-Type': 'text/plain'});
+      return res.end(err.toString());
+    }
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end("["+ tokens.map(function(token) {
+      return token.toJSON();
+    })+"]");
+  });
+}
+
+/**
  *  Returns auth_server web application connect middleware.
  *
  * This middleware will take care of serving the auth_server web app
@@ -137,5 +153,6 @@ exports.connector = function(oauth2_client) {
     addRoute('put', '/clients/:id', updateClient);
     addRoute('del', '/clients/:id', deleteClient);
     addRoute('get', '/users', listUsers);
+	addRoute('get', '/accessTokens', listAccessTokens);
   });
 };

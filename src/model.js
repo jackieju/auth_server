@@ -196,6 +196,40 @@ Grant.getById = function(id, callback) {
     callback(null, new Grant(result));
   });
 }
+/**
+ * AccessToken Model
+ */
+function AccessToken(data) {
+  Model.call(this, 'AccessToken', data);
+}
+inherits(AccessToken, Model);
+AccessToken.get = function(token, callback) {
+  db.collection('AccessToken').findOne({token: token}, function(err, result) {
+    if (err) return callback(err);
+    callback(null, new AccessToken(result));
+  });
+}
+
+function AccessTokens() {
+  Collection.call(this, db, 'AccessToken');
+}
+inherits(AccessTokens, Collection);
+AccessTokens.prototype.search = function(query, callback) {
+  this.findItems(query, function(err, items) {
+    if (err) return callback(err);
+    callback(null, items.map(function(item) {
+      return new AccessToken(item);
+    }));
+  });
+}
+AccessTokens.prototype.get = function(callback) {
+  this.findItems({}, function(err, result) {
+    if (err) return callback(err);
+    callback(null, result.map(function(item) {
+      return new AccessToken(item);
+    }));
+  });
+}
 
 /**
  * Contact Model
@@ -243,3 +277,5 @@ exports.Users = new Users();
 exports.Grant = Grant;
 exports.Contact = Contact;
 exports.Contacts = new Contacts();
+exports.AccessToken = AccessToken;
+exports.AccessTokens = new AccessTokens();

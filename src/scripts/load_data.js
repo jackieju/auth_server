@@ -84,7 +84,7 @@ var load_users = function(next) {
  * Load the client applications in store.
  */
 var load_clients = function(next) {
-	console.log("load clients");
+//	console.log("load clients");
   var clients = [
     // name, redirect_uri
     [config.oauth2_client.name, config.oauth2_client.client.redirect_uri],

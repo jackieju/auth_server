@@ -10,7 +10,7 @@
           {
             'host':     "localhost",
 			'port':      "7070",
-            'clientId': "4dff5da858167c076700000a",
+            'clientId': "d779034e443a344609000000",
 			secret: "some_secret_string"
           };
 
@@ -56,12 +56,12 @@
                 xhr.setRequestHeader('Accept',        "application/json");
               }
             , success: function (response) {
-                var container = $('span.user');
+              /*  var container = $('span.user');
                 if (response) {
                   container.text(response.username);
                 } else {
                   container.text("An error occurred.");
-                }
+                }*/
               }
           });
         } else {
@@ -94,13 +94,12 @@
          }
      }
 
-    // alert(props);
  }
 
 	function getAccessToken(){
   
  url1 =  "/oauth2/token?t="+new Date().getTime();
-
+//alert(url1);
 		      $.ajax({
 				type:"post",
               url: url1,
@@ -128,6 +127,7 @@
 				alert("err: "+ textStatus+","+errorThrown);
 			}
           });
+		return false;
 	}
     </script>
     <style>
@@ -138,7 +138,7 @@
   </head>
 
   <body>
-	<h3>This page show how Javascript does oauth2 user-agent flow </h3>
+	<h3>This page show how Javascript does oauth2 user-agent flow and authorization code flow</h3>
 	<hr>
     <div class="authenticate hidden" id="buttons">
       <a class="connect" id="a_flow" href="" ><span style="border-style: inset;border: 2px outset buttonface;text-align: center;text-indent: 0px;text-shadow: none;text-transform: none;word-spacing: normal;color: darkGray;display: inline-block;display: inline-block;margin-left: 2px;padding:2px 5px;color: white;font-size: 13px;background:#2222ff">Test authorization code flow</span></a>
@@ -150,7 +150,7 @@
 		<p>
 			You are getting request token(authorizatione code)
 			<span id="rt" style="color:blue;"></span><br>
-		    <a href="javascript:void()" onclick="getAccessToken()"><span style="border-style: inset;border: 2px outset buttonface;text-align: center;text-indent: 0px;text-shadow: none;text-transform: none;word-spacing: normal;color: darkGray;display: inline-block;display: inline-block;margin-left: 2px;padding:2px 5px;color: white;font-size: 13px;background:#2222ff">Get Access Token</span></a>
+		    <a href="javascript:void();" onclick="getAccessToken()"><span style="border-style: inset;border: 2px outset buttonface;text-align: center;text-indent: 0px;text-shadow: none;text-transform: none;word-spacing: normal;color: darkGray;display: inline-block;display: inline-block;margin-left: 2px;padding:2px 5px;color: white;font-size: 13px;background:#2222ff">Get Access Token</span></a>
 		</p>
 	</div>
 
@@ -160,10 +160,10 @@
         <input size=200 id="at" class="token"style="color:blue" value="[no token]"></input>.
       </p>
 
-      <p>
+      <!--p>
         Your SoundCloud username is
         <span class="user">[no username]</span>.
-      </p>
+      </p-->
     </div>
 
       <a class="connect" id="logout" href="/logout" ><span style="border-style: inset;border: 2px outset buttonface;text-align: center;text-indent: 0px;text-shadow: none;text-transform: none;word-spacing: normal;color: dark;display: inline-block;display: inline-block;margin-left: 2px;padding:2px 5px;;font-size: 13px;background:#ffffff">logout</span></a>

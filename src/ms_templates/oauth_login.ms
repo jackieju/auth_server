@@ -42,9 +42,9 @@
 					</div>
 					<div style="clear:both"></div>
                     <p>You don't have an account? <a href="/register">Register</a></p>
-                    <p><a href="/login/delegate?provider=facebook.com&info={{info}}">
+                    <!--p><a href="/login/delegate?provider=facebook.com&info={{info}}">
                             Login with Facebook
-                    </a></p>
+                    </a></p-->
                 </div>
             </div>
 
