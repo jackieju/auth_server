@@ -20,7 +20,7 @@
                     <p>You are about to signin to <strong>{{client_name}}</strong>
                         using <strong>{{server_name}}</strong>:</p>
 					<div style="border:0px dotted blue;">
-					<h3>Authorization Code Flow</h3>
+					<!--h3>Authorization Code Flow</h3-->
                     <form action="{{action}}" method="post">
                         <input type="hidden" name="info" value="{{info}}" />
 
@@ -37,9 +37,9 @@
                         <input type="submit" value="Sign in" />
                     </form>
 					</div>
-					<div style="border:0px dotted blue;">
+					<!--div style="border:0px dotted blue;">
 						<h3><a href="/test.html">user-agent flow </a></h3>
-					</div>
+					</div-->
 					<div style="clear:both"></div>
                     <p>You don't have an account? <a href="/register">Register</a></p>
                     <!--p><a href="/login/delegate?provider=facebook.com&info={{info}}">

@@ -88,12 +88,12 @@
      for(var p in obj){
   
          if(typeof(obj[p])=="function"){
-             obj[p]();
+        //     obj[p]();
          }else{
            props+= p + "=" + obj[p] + "\n";
          }
      }
-
+	return props;
  }
 
 	function getAccessToken(){
@@ -124,7 +124,8 @@
 			
               },
 			error: function(jqXHR, textStatus, errorThrown){
-				alert("err: "+ textStatus+","+errorThrown);
+			//	alert("err: "+ inspect(jqXHR)+","+textStatus+","+errorThrown);
+				alert("err " +jqXHR.status+": "+jqXHR.responseText)
 			}
           });
 		return false;
